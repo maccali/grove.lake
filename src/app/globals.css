@@ -12,11 +12,24 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --font-aperture: "Aperture", "sans-serif"
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+@font-face {
+  font-family: "Aperture";
+  src: url("/fonts/aperture2.0-webfont.woff2") format("woff2"),
+    url("/fonts/aperture2.0-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
