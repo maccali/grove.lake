@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 const origin = (process.env.NEXT_PUBLIC_SITE_URL || 'https://grovelake.art').replace(/\/$/, '');
+const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const shareImageUrl = new URL('/grove-lake-social.jpg', productionHost ? `https://${productionHost}` : origin).href;
+assert.ok(existsSync('out/grove-lake-social.jpg'), 'social image exported');
+
 const home = readFileSync('out/pt.html', 'utf8');
 function linkedIds(html, category) {
   const pattern = new RegExp('href="/pt/' + category + '/([a-z0-9-]+)"', 'g');
@@ -21,6 +25,8 @@ for(const lang of ['pt','en']) {
     assert.match(html,new RegExp(`<html[^>]*lang="${lang==='pt'?'pt-BR':'en'}"`),`html lang: ${route}`);
     const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
     assert.ok(title?.includes('Grove Lake'),`title: ${route}`);
+    assert.ok(html.includes(`<meta property="og:image" content="${shareImageUrl}"`), `Open Graph image: ${route}`);
+    assert.ok(html.includes(`<meta name="twitter:image" content="${shareImageUrl}"`), `Twitter/X image: ${route}`);
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/g)||[];
     assert.equal(canonical.length,1,`canonical count: ${route}`);
     assert.ok(canonical[0].includes(`${origin}${route}`),`canonical URL: ${route}`);
@@ -33,6 +39,10 @@ for(const lang of ['pt','en']) {
     if(!process.env.NEXT_PUBLIC_GA_ID) assert.ok(!html.includes('https://www.googletagmanager.com/gtag/js?id='),'no unconfigured Analytics tag');
   }
 }
+const entry = readFileSync('out/index.html', 'utf8');
+assert.ok(entry.includes(`<meta property="og:image" content="${shareImageUrl}"`), 'Open Graph image on the root URL');
+assert.ok(entry.includes(`<meta name="twitter:image" content="${shareImageUrl}"`), 'Twitter/X image on the root URL');
+
 const sitemap = readFileSync('out/sitemap.xml','utf8');
 assert.equal((sitemap.match(/<loc>/g)||[]).length,paths.length * 2,'all localized pages in sitemap');
 for(const lang of ['pt','en']) for(const path of paths) assert.ok(sitemap.includes(`${origin}/${lang}${path}`));

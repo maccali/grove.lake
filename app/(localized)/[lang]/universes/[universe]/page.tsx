@@ -1,3 +1,4 @@
+import { Brand } from '../../../../../components/brand';
 import { notFound } from 'next/navigation';
 import { CatalogCover } from '../../../../../components/catalog-cover';
 import ReleaseLink from '../../../../../components/release-link';
@@ -36,7 +37,7 @@ export default async function UniversePage({ params }: Props) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(musicSchema(lang)).replace(/</g, '\\u003c') }}/>
       <header className="header">
-        <a className="brand" href={`/${lang}`}>GROVE LAKE</a>
+        <Brand href={`/${lang}`} label={t.home}/>
         <nav aria-label={t.language} className="language-switch">
           <LanguageLink href={`/pt/universes/${universe.id}`} language="pt" current={lang === 'pt'}/>
           <span aria-hidden="true">/</span>

@@ -41,7 +41,7 @@ npx vercel --prod
 - `app/globals.css`: identidade, layout e cores.
 - `public/art/`: capas e artes do catálogo. Ajuste `art` em `lib/content.ts`.
 - `app/layout.tsx`: metadados de SEO e compartilhamento.
-- `public/opengraph-image.png`: imagem de compartilhamento.
+- `public/grove-lake-social.jpg`: imagem de compartilhamento. Na Vercel, os metadados usam o domínio de produção do projeto para servir a imagem quando a variável de sistema estiver disponível.
 
 ### Antes de divulgar
 
