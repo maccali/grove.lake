@@ -25,7 +25,7 @@ npx serve out
 2. Na Vercel, clique em **Add New → Project** e importe esse repositório.
 3. O framework é **Next.js**. Se o repositório contém uma pasta `grove-lake`, selecione essa pasta em **Root Directory**; se o package.json está na raiz, mantenha a raiz.
 4. Mantenha os comandos padrão: instalação `npm ci`, build `npm run build`. Não altere o Output Directory.
-5. Clique em **Deploy**. Configure `NEXT_PUBLIC_SITE_URL=https://grovelake.art`. Para ativar o Analytics, informe também `NEXT_PUBLIC_GA_ID` com seu ID real `G-...`.
+5. Clique em **Deploy**. Configure `NEXT_PUBLIC_SITE_URL=https://grove-lake.vercel.app`. Para ativar o Analytics, informe também `NEXT_PUBLIC_GA_ID` com seu ID real `G-...`.
 
 Alternativa com a CLI, dentro da pasta do projeto:
 
@@ -41,7 +41,7 @@ npx vercel --prod
 - `app/globals.css`: identidade, layout e cores.
 - `public/art/`: capas e artes do catálogo. Ajuste `art` em `lib/content.ts`.
 - `app/layout.tsx`: metadados de SEO e compartilhamento.
-- `public/grove-lake-social.jpg`: imagem de compartilhamento. Na Vercel, os metadados usam o domínio de produção do projeto para servir a imagem quando a variável de sistema estiver disponível.
+- `public/grove-lake-social.jpg`: imagem de compartilhamento. Os metadados apontam para a imagem no endereço canônico do site.
 
 ### Antes de divulgar
 
@@ -60,15 +60,24 @@ A interface está em português e inglês. No primeiro acesso, usa o primeiro id
 
 - Páginas `/pt`, `/en` e páginas de cada álbum em `/{idioma}/albums/{id}`, com links HTML rastreáveis.
 - Título, descrição, canonical e hreflang gerados no servidor em cada página, com Open Graph e Twitter Cards.
-- Dados estruturados JSON-LD `MusicGroup`, `WebSite` e `MusicAlbum`, sem inventar avaliações, datas ou perfis oficiais.
+- Dados estruturados JSON-LD com o projeto, seu criador, plataformas oficiais, universos, lançamentos e faixas.
 - Sitemap em `/sitemap.xml` e regras em `/robots.txt`.
-- O domínio canônico padrão é `https://grovelake.art`; ajuste `NEXT_PUBLIC_SITE_URL` se necessário antes do build.
+- O domínio canônico padrão é `https://grove-lake.vercel.app`. Configure `NEXT_PUBLIC_SITE_URL=https://grovelake.art` somente depois que esse domínio servir o site e o sitemap publicamente.
 - O GA4 só é carregado com `NEXT_PUBLIC_GA_ID` válido. Sem o ID, nenhum script de medição é enviado. A página de entrada não dispara medição antes do redirecionamento de idioma.
-- Pageviews usam o evento padrão de configuração do Google. Links principais de plataformas emitem `listen_click`; aberturas do catálogo emitem `album_open`; trocas de idioma emitem `language_change`. Dados enviados são plataforma, identificador do álbum e idioma; sem nome do visitante ou informações de contato. Google Signals e personalização de anúncios ficam desativados.
+- A visita usa o evento padrão `page_view`. Os parâmetros `page_type` e `site_language` identificam o tipo de página e o idioma. O redirecionamento inicial preserva a query para manter a atribuição de campanhas com UTM.
+- `universe_open` e `album_open` medem a navegação entre universos e lançamentos. `listen_click` distingue YouTube, Spotify, Amazon Music e Apple Music. `placement` indica de onde saiu o clique, como cabeçalho, destaque, catálogo ou página do lançamento. `album` e `universe` identificam o conteúdo quando aplicável.
+- `navigation_click`, `language_change`, `menu_toggle` e `album_preview_close` detalham a navegação. `scroll_depth` registra os marcos de 25, 50, 75 e 90% uma vez por carregamento. Google Signals e personalização de anúncios ficam desativados.
+- No GA4, acesse **Administrador > Definições personalizadas** e crie dimensões com escopo **Evento** para `placement`, `platform`, `universe`, `album`, `site_language`, `page_type`, `target` e `target_language`, conforme o que deseja detalhar nos relatórios. Para comparar os marcos de rolagem como categorias, use `scroll_percent` como dimensão de evento. Confira os parâmetros no Tempo real ou no DebugView.
 - Na Vercel, cadastre as variáveis para Production e refaça o deploy: variáveis `NEXT_PUBLIC_*` são incorporadas no build. No desenvolvimento, copie `.env.example` para `.env.local`.
 - Para verificar a instalação, abra o site com o ID real e consulte o relatório **Tempo real** do GA4. Bloqueadores e preferências do navegador podem impedir a medição.
 - `GOOGLE_SITE_VERIFICATION` é opcional: recebe o conteúdo da meta tag de verificação do Search Console. A verificação de domínio via TXT também pode ser feita no DNS, sem esta variável.
 
-Depois de conectar o domínio e tornar o site público na Vercel, verifique `https://grovelake.art/sitemap.xml`, cadastre a propriedade no Google Search Console e envie o sitemap. A prévia privada exige login e não pode ser indexada pelo Google. A configuração técnica não garante ranking: conteúdo, relevância, menções e concorrência também influenciam os resultados.
+Depois de conectar o domínio e tornar o site público na Vercel, verifique `/sitemap.xml` no domínio canônico, cadastre a propriedade no Google Search Console e envie o sitemap. A prévia privada exige login e não pode ser indexada pelo Google. A configuração técnica não garante ranking: conteúdo, relevância, menções e concorrência também influenciam os resultados.
 
 Este pacote usa exportação estática (`output: "export"`), compatível com a Vercel. Para visualizar o build local, use `npx serve out`; `next start` não é usado neste perfil.
+
+### Yandex e busca por IA
+
+1. No [Yandex Webmaster](https://webmaster.yandex.com/), adicione o endereço público que vai aparecer nas buscas e selecione a verificação por tag HTML. Copie o valor de `content` para `YANDEX_SITE_VERIFICATION` na Vercel e gere um novo deploy. A verificação por TXT no DNS também está disponível no painel.
+2. Confirme a propriedade no painel e envie o `/sitemap.xml` do endereço escolhido. Acompanhe a indexação no Yandex Webmaster.
+3. O `robots.txt` permite o Yandex e o `OAI-SearchBot`, usado pela busca do ChatGPT. Em produção, o HTML, o sitemap e as imagens precisam estar acessíveis publicamente.

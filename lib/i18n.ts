@@ -18,7 +18,7 @@ type ReleaseCopy = { subtitle?: string; description: string };
 
 export const translations = {
   pt: {
-    htmlLang: 'pt-BR', title: 'Grove Lake — Cada álbum, um universo', description: 'Hip-hop instrumental, synthwave e histórias sem palavras. Explore os universos musicais de Grove Lake.',
+    htmlLang: 'pt-BR', title: 'Grove Lake — Hip-hop instrumental e synthwave', description: 'Grove Lake é o projeto musical brasileiro de Guilherme Maccali. Explore álbuns e singles de hip-hop instrumental, synthwave e trap.',
     skip: 'Pular para o conteúdo', home: 'Grove Lake início', nav: 'Principal', universes: 'Universos', project: 'O projeto', connect: 'Conecte-se', listen: 'Ouvir agora', closeMenu: 'Fechar menu', openMenu: 'Abrir menu', language: 'Idioma do site',
     independent: 'INDEPENDENTE. INSTRUMENTAL. SEM FRONTEIRAS.', heroFirst: 'Cada álbum,', heroSecond: 'um', heroWorld: 'universo.', stories: 'Histórias sem palavras.', beats: 'Beats que levam você para outro lugar.', journey: 'Entre nessa viagem', explore: 'Explore os universos', hiphop: 'HIP-HOP INSTRUMENTAL', made: 'FEITO NO BRASIL, PARA VIAJAR.',
     shipAlt: 'Ilustração conceitual de uma nave iluminada sobre o deserto marciano', transmission: 'TRANSMISSÃO 051', nextWorld: 'PRÓXIMO UNIVERSO', discover: 'Conhecer AREA 51 MY SHIP', coordinates: 'TERRA → MARTE / SEM PASSAGEM DE VOLTA', noWords: 'SEM PALAVRAS. SÓ UNIVERSOS.', ai: 'Criação humana, com apoio de IA',
@@ -35,7 +35,7 @@ export const translations = {
     } satisfies Partial<Record<string, ReleaseCopy>>,
   },
   en: {
-    htmlLang: 'en', title: 'Grove Lake — Every album, a universe', description: 'Instrumental hip-hop, synthwave and stories without words. Explore the musical worlds of Grove Lake.',
+    htmlLang: 'en', title: 'Grove Lake — Instrumental hip-hop and synthwave', description: 'Grove Lake is the Brazilian music project of Guilherme Maccali. Explore instrumental hip-hop, synthwave and trap albums and singles.',
     skip: 'Skip to content', home: 'Grove Lake home', nav: 'Main navigation', universes: 'Universes', project: 'The project', connect: 'Connect', listen: 'Listen now', closeMenu: 'Close menu', openMenu: 'Open menu', language: 'Website language',
     independent: 'INDEPENDENT. INSTRUMENTAL. NO BORDERS.', heroFirst: 'Every album,', heroSecond: 'a', heroWorld: 'universe.', stories: 'Stories without words.', beats: 'Beats that take you somewhere else.', journey: 'Take the journey', explore: 'Explore the universes', hiphop: 'INSTRUMENTAL HIP-HOP', made: 'MADE IN BRAZIL. BOUND FOR ELSEWHERE.',
     shipAlt: 'Concept illustration of an illuminated spaceship above the Martian desert', transmission: 'TRANSMISSION 051', nextWorld: 'THE NEXT UNIVERSE', discover: 'Discover AREA 51 MY SHIP', coordinates: 'EARTH → MARS / NO RETURN TICKET', noWords: 'NO WORDS. JUST WORLDS.', ai: 'Human Created, AI-Assisted',

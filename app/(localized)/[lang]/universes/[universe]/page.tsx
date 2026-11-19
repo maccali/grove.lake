@@ -1,4 +1,5 @@
 import { Brand } from '../../../../../components/brand';
+import { analyticsClick } from '../../../../../lib/analytics';
 import { notFound } from 'next/navigation';
 import { CatalogCover } from '../../../../../components/catalog-cover';
 import ReleaseLink from '../../../../../components/release-link';
@@ -35,7 +36,7 @@ export default async function UniversePage({ params }: Props) {
   const tagline = universeTagline(lang, universe.id);
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(musicSchema(lang)).replace(/</g, '\\u003c') }}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(musicSchema(lang, { kind: 'universe', id: universe.id })).replace(/</g, '\\u003c') }}/>
       <header className="header">
         <Brand href={`/${lang}`} label={t.home}/>
         <nav aria-label={t.language} className="language-switch">
@@ -45,7 +46,7 @@ export default async function UniversePage({ params }: Props) {
         </nav>
       </header>
       <main className="section universe-page">
-        <a className="text-link" href={`/${lang}#universos`}>← {t.universes}</a>
+        <a className="text-link" href={`/${lang}#universos`} {...analyticsClick('navigation_click', 'universe_details', { target: 'universes' })}>← {t.universes}</a>
         <div className="universe-page-intro">
           <h1>{title}</h1>
           {tagline && <p>{tagline}</p>}

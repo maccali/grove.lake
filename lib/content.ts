@@ -1,6 +1,7 @@
 // Centralize aqui os links e textos. As artes SVG são conceitos visuais substituíveis.
 export const artist = {
   name: 'Grove Lake',
+  founder: 'Guilherme Maccali',
   youtube: 'https://www.youtube.com/@grovelakemusic',
   spotify: 'https://open.spotify.com/intl-pt/artist/3w5QkuCxzp8kT4YZjJ1HEI',
   amazonMusic: 'https://music.amazon.com.br/artists/B0DFNP9NYX/grove-lake',
